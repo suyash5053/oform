@@ -12,8 +12,11 @@ import {Textarea} from "@/components/ui/textarea";
 import {toast} from "@/components/ui/use-toast";
 import { formSchema, formSchemaType } from "@/schemas/form";
 import {CreateForm} from "@/actions/form";
+import { BsFileEarmarkPlus } from "react-icons/bs";
+import {useRouter} from "next/navigation";
 
 function CreateFormBtn() {
+    const router = useRouter();
     const form = useForm<formSchemaType>({
         resolver: zodResolver(formSchema),
     });
@@ -25,7 +28,7 @@ function CreateFormBtn() {
                 title: "Success",
                 description: "Form created successfully",
             });
-            console.log("Form ID", formId);
+            router.push(`/builder/${formId}`);
         }
         catch (error) {
          toast({
@@ -39,7 +42,15 @@ function CreateFormBtn() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>Create New Form</Button>
+                <Button
+                    variant={"outline"}
+                    className={"group border border-primary/20 h-[190px] items-center justify-center flex flex-col hover:border-primary" +
+                    "hover:cursor-pointer border-dashed gap-4"}>
+                    <BsFileEarmarkPlus className={"h-8 w-8 text-muted-foreground group-hover:text-primary"} />
+                    <p className={"font-bold text-xl text-muted-foreground group-hover:text-primary"}>
+                    Create New Form
+                    </p>
+                </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
